@@ -20,14 +20,19 @@ const writeToLog = (operationIdentifier, prevResult, operationNumber, newResult)
 };
 
 const calculateResult = (calculationType) => {
+    const enteredNumber = getUserNumber();
+
     if (
         calculationType !== 'ADD' &&
         calculationType !== 'SUBTRACT' &&
         calculationType !== 'MULTIPLY' &&
-        calculationType !== 'DIVIDE'
-    ) return;
+        calculationType !== 'DIVIDE' ||
+        !enteredNumber
+    ) {
+        createAndWriteOutput('it\'s not allowed to input zero', '', '');
+        return;
+    }
 
-    const enteredNumber = getUserNumber();
     const initialResult = currentResult;
     let mathOperator;
 
@@ -54,12 +59,7 @@ const calculateResult = (calculationType) => {
     writeToLog(calculationType, initialResult, enteredNumber, currentResult);
 };
 
-const add = () => calculateResult('ADD');
-const subtract = () => calculateResult('SUBTRACT');
-const multiply = () => calculateResult('MULTIPLY');
-const divide = () => calculateResult('DIVIDE');
-
-addBtn.addEventListener('click', add);
-subtractBtn.addEventListener('click', subtract);
-multiplyBtn.addEventListener('click', multiply);
-divideBtn.addEventListener('click', divide);
+addBtn.addEventListener('click', () => calculateResult('ADD'));
+subtractBtn.addEventListener('click', () => calculateResult('SUBTRACT'));
+multiplyBtn.addEventListener('click', () => calculateResult('MULTIPLY'));
+divideBtn.addEventListener('click', () => calculateResult('DIVIDE'));
